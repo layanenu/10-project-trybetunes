@@ -4,13 +4,13 @@ import Carregando from '../pages/Carregando';
 import { getUser } from '../services/userAPI';
 
 class Header extends React.Component {
-  // constructor() {
-  // super();
-  state = {
-    userName: '',
-    carregando: true,
-  };
-  // }
+  constructor() {
+    super();
+    this.state = {
+      userName: '',
+      carregando: true,
+    };
+  }
 
   async componentDidMount() {
     const name = await getUser();
