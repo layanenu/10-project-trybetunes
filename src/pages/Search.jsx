@@ -100,11 +100,11 @@ class Search extends React.Component {
         }
         {
           mostraAlbums && (
-            <h2>
-              Resultado de álbuns de:`$
-              {artistaProcurado}
-              `
-            </h2>)
+            <h1>
+              Resultado de álbuns de:
+              {' '}
+              {`${artistaProcurado}`}
+            </h1>)
         }
         {
           albums.length === 0
@@ -119,8 +119,8 @@ class Search extends React.Component {
                         <p>{element.artistName}</p>
                         <p>{element.collectionName}</p>
                         <Link
-                          to={ `/album/${e.collectionId}` }
-                          data-testid={ `link-to-album-${e.collectionId}` }
+                          to={ `/album/${element.collectionId}` }
+                          data-testid={ `link-to-album-${element.collectionId}` }
                         />
                       </li>
                     ))
