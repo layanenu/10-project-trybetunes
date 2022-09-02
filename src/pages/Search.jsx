@@ -13,7 +13,7 @@ class Search extends React.Component {
       carregando: false,
       albums: [],
       artistaProcurado: '',
-      mostraAlbums: false,
+      mostraAlbuns: false,
     };
   }
 
@@ -37,27 +37,19 @@ class Search extends React.Component {
 
   // exibe carregando -> faz a requisição na Api -> carregando: false
   handleClick = async () => {
-    try {
-      const { valueInputArtistName } = this.state;
-      this.setState({
-        valueInputArtistName: '',
-        carregando: true,
-        searchButtonDisabled: true,
-      });
-      const listaDeAlbuns = await searchAlbumsAPI(valueInputArtistName);
-      this.setState({
-        carregando: false,
-        albums: listaDeAlbuns,
-        artistaProcurado: valueInputArtistName,
-        mostraAlbums: true,
-      });
-    } catch (error) {
-      window.alert('Houve algum erro inesperado');
-    } finally {
-      this.setState({
-        carregando: false,
-      });
-    }
+    const { valueInputArtistName } = this.state;
+    this.setState({
+      valueInputArtistName: '',
+      carregando: true,
+      searchButtonDisabled: true,
+    });
+    const listaDeAlbuns = await searchAlbumsAPI(valueInputArtistName);
+    this.setState({
+      carregando: false,
+      albums: listaDeAlbuns,
+      artistaProcurado: valueInputArtistName,
+      mostraAlbuns: true,
+    });
   };
 
   render() {
@@ -66,7 +58,7 @@ class Search extends React.Component {
       searchButtonDisabled,
       carregando,
       albums,
-      mostraAlbums,
+      mostraAlbuns,
       artistaProcurado,
     } = this.state;
     return (
@@ -99,7 +91,7 @@ class Search extends React.Component {
             </>)
         }
         {
-          mostraAlbums && (
+          mostraAlbuns && (
             <h1>
               Resultado de álbuns de:
               {' '}
@@ -113,16 +105,19 @@ class Search extends React.Component {
               <div>
                 <ul>
                   {
-                    albums.map((element) => (
-                      <li key={ element.artistId }>
-                        <img src={ element.artworkUrl100 } alt="imagem do album" />
-                        <p>{element.artistName}</p>
-                        <p>{element.collectionName}</p>
-                        <Link
-                          to={ `/album/${element.collectionId}` }
-                          data-testid={ `link-to-album-${element.collectionId}` }
-                        />
-                      </li>
+                    albums.map((element, index) => (
+                      <Link
+                        to={ `/album/${element.collectionId}` }
+                        data-testid={ `link-to-album-${element.collectionId}` }
+                        key={ `album-list-${index}` }
+                      >
+                        <li>
+                          <img src={ element.artworkUrl100 } alt="imagem do album" />
+                          <p>{element.artistName}</p>
+                          <p>{element.collectionName}</p>
+
+                        </li>
+                      </Link>
                     ))
                   }
                 </ul>
