@@ -3,27 +3,46 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+import Carregando from './Carregando';
 
 class Album extends React.Component {
   constructor() {
     super();
     this.state = {
       listaDeMusicas: [],
+      carregando: false,
+      listaDeMusicasFavoritas: [],
     };
   }
 
   async componentDidMount() {
+    await this.adcFavoriteSongs();
     const { match: { params: { id } } } = this.props;
     const musics = await getMusics(id);
-    // console.log(musics);
     this.setState({
       listaDeMusicas: musics,
     });
   }
 
+  createFavoriteSongList = async (objeto) => {
+    this.setState({ carregando: true }, async () => {
+      await addSong(objeto);
+      await this.adcFavoriteSongs();
+      this.setState({ carregando: false });
+    });
+  };
+
+  adcFavoriteSongs = async () => {
+    const getFavorite = await getFavoriteSongs();
+    this.setState(({
+      listaDeMusicasFavoritas: getFavorite,
+    }));
+  };
+
   render() {
-    const { listaDeMusicas } = this.state;
-    console.log(listaDeMusicas);
+    const { listaDeMusicas, carregando, listaDeMusicasFavoritas } = this.state;
+    // console.log(listaDeMusicas);
     return (
       <div data-testid="page-album">
         <Header />
@@ -38,15 +57,36 @@ class Album extends React.Component {
               <p data-testid="album-name">{listaDeMusicas[0].collectionName}</p>
             </div>)
         }
-        <div>
-          { listaDeMusicas.map((element, index) => (index > 0 && (
-            <MusicCard
-              key={ element.trackId }
-              trackName={ element.trackName }
-              previewUrl={ element.previewUrl }
-            />)))}
-        </div>
+        {/* <div /> */}
+        {/* <div> */}
+        { carregando ? <Carregando />
+          : listaDeMusicas.map((element, index) => (index > 0 && (
+            <div>
+              <MusicCard
+                key={ element.trackId }
+                trackName={ element.trackName }
+                previewUrl={ element.previewUrl }
+                // trackId={ element.trackId }
+              />
+              <label htmlFor={ index }>
+                Favorita
+                <input
+                  type="checkbox"
+                  id={ index }
+                  onClick={ async () => {
+                    await this.createFavoriteSongList(element);
+                    await this.adcFavoriteSongs();
+                  } }
+                  data-testid={ `checkbox-music-${element.trackId}` }
+                  defaultChecked={ listaDeMusicasFavoritas.length > 0 && (
+                    listaDeMusicasFavoritas
+                      .some((element2) => element2.trackName === element.trackName)
+                  ) }
+                />
+              </label>
+            </div>)))}
       </div>
+      // </div>
     );
   }
 }

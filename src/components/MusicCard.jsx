@@ -7,15 +7,23 @@ class MusicCard extends React.Component {
 
     return (
       <div>
-        <p>{trackName}</p>
-        <audio data-testid="audio-component" src={ previewUrl } controls>
-          <track kind="captions" />
-          O seu navegador não suporta o elemento
-          {' '}
-          {' '}
-          <code>audio</code>
-          .
-        </audio>
+        <div>
+          <p>{trackName}</p>
+          <audio data-testid="audio-component" src={ previewUrl } controls>
+            <track kind="captions" />
+            O seu navegador não suporta o elemento
+            {' '}
+            {' '}
+            <code>audio</code>
+            .
+          </audio>
+        </div>
+        {/* <div>
+          <label data-testid={ `checkbox-music-${trackId}` } htmlFor="checkbox">
+            Favorita
+            <input type="checkbox" id="checkbox" />
+          </label>
+        </div> */}
       </div>
     );
   }

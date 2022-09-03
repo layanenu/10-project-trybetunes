@@ -23,11 +23,13 @@ const simulateRequest = (response) => (callback) => {
   }, TIMEOUT);
 };
 
+// 2-Pega musicas favoritas
 export const getFavoriteSongs = () => new Promise((resolve) => {
   const favoriteSongs = readFavoriteSongs();
   simulateRequest(favoriteSongs)(resolve);
 });
 
+// 1-adiciona musicas favoritas
 export const addSong = (song) => new Promise((resolve) => {
   if (song) {
     const favoriteSongs = readFavoriteSongs();
