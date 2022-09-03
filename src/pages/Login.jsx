@@ -47,7 +47,7 @@ class Login extends React.Component {
   render() {
     const { name, carregando, saveButtonDisabled, redirect } = this.state;
     return (
-      <div data-testid="page-login">
+      <div data-testid="page-login" className="container-form-login">
         { carregando && <Carregando /> }
         <form>
           <input

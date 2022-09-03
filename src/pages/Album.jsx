@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Header from '../components/Header';
+import Header from '../components/header/Header';
 import getMusics from '../services/musicsAPI';
-import MusicCard from '../components/MusicCard';
+import MusicCard from '../components/musicCard/MusicCard';
 import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 import Carregando from './Carregando';
 
@@ -42,7 +42,6 @@ class Album extends React.Component {
 
   render() {
     const { listaDeMusicas, carregando, listaDeMusicasFavoritas } = this.state;
-    // console.log(listaDeMusicas);
     return (
       <div data-testid="page-album">
         <Header />
@@ -57,8 +56,6 @@ class Album extends React.Component {
               <p data-testid="album-name">{listaDeMusicas[0].collectionName}</p>
             </div>)
         }
-        {/* <div /> */}
-        {/* <div> */}
         { carregando ? <Carregando />
           : listaDeMusicas.map((element, index) => (index > 0 && (
             <div>
@@ -66,7 +63,6 @@ class Album extends React.Component {
                 key={ element.trackId }
                 trackName={ element.trackName }
                 previewUrl={ element.previewUrl }
-                // trackId={ element.trackId }
               />
               <label htmlFor={ index }>
                 Favorita
@@ -86,7 +82,6 @@ class Album extends React.Component {
               </label>
             </div>)))}
       </div>
-      // </div>
     );
   }
 }

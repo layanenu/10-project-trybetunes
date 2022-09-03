@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
+import Header from '../components/header/Header';
 import Carregando from './Carregando';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 
@@ -115,7 +115,6 @@ class Search extends React.Component {
                           <img src={ element.artworkUrl100 } alt="imagem do album" />
                           <p>{element.artistName}</p>
                           <p>{element.collectionName}</p>
-
                         </li>
                       </Link>
                     ))
