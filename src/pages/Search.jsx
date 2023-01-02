@@ -68,17 +68,16 @@ class Search extends React.Component {
           carregando ? (
             <Carregando />
           ) : (
-            <>
-              <form>
-                <input
-                  type="text"
-                  data-testid="search-artist-input"
-                  placeholder="Nome do Artista"
-                  name="valueInputArtistName"
-                  value={ valueInputArtistName }
-                  onChange={ this.handleArtistSearch }
-                />
-              </form>
+            <form>
+              <input
+                type="text"
+                data-testid="search-artist-input"
+                placeholder="Nome do Artista"
+                name="valueInputArtistName"
+                value={ valueInputArtistName }
+                onChange={ this.handleArtistSearch }
+              />
+
               <button
                 type="button"
                 data-testid="search-artist-button"
@@ -87,8 +86,7 @@ class Search extends React.Component {
               >
                 Pesquisar
               </button>
-
-            </>)
+            </form>)
         }
         {
           mostraAlbuns && (
